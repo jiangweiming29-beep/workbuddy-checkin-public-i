@@ -1,0 +1,55 @@
+# ============================================================
+#  上传前防误提交清单
+#  作用：把「凭据、运行产物、本机调试临时文件」挡在仓库外，
+#       避免把 token / 本机路径顺手 commit 上去。
+#  如确需保留某个被忽略的文件，用 `git add -f <文件>` 强制加入。
+# ============================================================
+
+# ---- 凭据 / 密钥：绝不入库 ----
+.env
+.env.*
+*.env
+notify_config.json
+notify_config.json.example
+*.local
+*.secret
+credentials.json
+credentials*.json
+*.pem
+*.key
+*.p12
+id_rsa*
+
+# ---- 脚本运行产物 ----
+result.json
+checkin.log
+*.log
+
+# ---- 本机登录态副本（万一被复制进目录）----
+#  注意：5.6.2+ 起该文件里是加密信封，粘贴进 Secret 也无法在云端解密
+workbuddy-desktop.info
+auth/*.info
+checkin-rt.json
+
+# ---- 本机调试临时文件（下划线开头）----
+_*.txt
+_*.json
+_*.py
+
+# ---- Python 缓存 / 虚拟环境 ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- 备份 ----
+_backup_*/
+*.bak
