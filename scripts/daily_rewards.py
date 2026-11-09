@@ -106,8 +106,7 @@ def inspect_travel(token, dry_run):
     data = current["data"]
     result["state"] = data.get("state") or "unknown"
     result["location"] = (data.get("location") or {}).get("name")
-    daily_limit_reached = bool(data.get("daily_limit_reached"))
-    if daily_limit_reached and result["state"] == "idle":
+    if data.get("daily_limit_reached"):
         result["message"] = "今日旅行次数已达上限"
         return result
     if result["state"] == "traveling":
@@ -132,9 +131,6 @@ def inspect_travel(token, dry_run):
         data = current["data"] if current["ok"] else {}
         result["state"] = data.get("state") or "idle"
     if result["state"] == "idle":
-        if daily_limit_reached:
-            result["message"] = "旅行奖励已领取 +%s；今日旅行次数已达上限，不再派出" % result["credits_gained"]
-            return result
         if dry_run:
             result.update(action="would_depart", message="猫猫空闲，可以派出（只读未派出）")
             return result
